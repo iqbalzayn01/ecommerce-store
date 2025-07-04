@@ -1,6 +1,6 @@
 import { Product } from '@/types';
 
-const API_URL = 'https://fakestoreapi.com';
+export const API_URL = 'https://fakestoreapi.com';
 
 export async function getAllProducts(): Promise<Product[]> {
   try {
@@ -29,3 +29,53 @@ export async function getAllProducts(): Promise<Product[]> {
 
 //     }
 // }
+
+export async function addToCart(
+  userId: number,
+  items: { productId: number; quantity: number }[]
+) {
+  try {
+    const res = await fetch(`${API_URL}/carts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId,
+        date: new Date().toISOString().split('T')[0],
+        products: items,
+      }),
+    });
+
+    if (!res.ok) throw new Error('Failed to add to cart');
+    return await res.json();
+  } catch (error) {
+    console.error('Add to cart error:', error);
+    return null;
+  }
+}
+
+export async function getCartByUser(userId: number) {
+  try {
+    const res = await fetch(`${API_URL}/carts/user/${userId}`);
+    if (!res.ok) throw new Error('Failed to get user cart');
+    return await res.json();
+  } catch (error) {
+    console.error('Fetch cart error:', error);
+    return [];
+  }
+}
+
+export async function deleteCart(cartId: number) {
+  try {
+    const res = await fetch(`${API_URL}/carts/${cartId}`, {
+      method: 'DELETE',
+    });
+
+    if (!res.ok) throw new Error('Failed to delete cart');
+    return await res.json();
+  } catch (error) {
+    console.error('Delete cart error:', error);
+    return null;
+  }
+}
