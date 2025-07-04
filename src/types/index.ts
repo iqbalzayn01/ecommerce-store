@@ -9,22 +9,22 @@ export type Product = {
 
 export type User = {
   id: number;
-  email: String;
-  username: String;
-  password: String;
+  email: string;
+  username: string;
+  password: string;
   name: {
-    firstname: String;
-    lastname: String;
+    firstname: string;
+    lastname: string;
   };
   address: {
-    city: String;
-    street: String;
-    number: Number;
-    zipcode: String;
+    city: string;
+    street: string;
+    number: number;
+    zipcode: string;
     geolocation: {
-      lat: String;
-      long: String;
+      lat: string;
+      long: string;
     };
   };
-  phone: String;
+  phone: string;
 };
